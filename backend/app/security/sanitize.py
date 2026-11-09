@@ -34,7 +34,7 @@ def prompt_injection_prefilter(text: str) -> str:
         r'exfiltrate',
         r'override\s+safety',
     ]
-    lowered = text.lower()
+    cleaned = text
     for p in patterns:
-        lowered = re.sub(p, '[BLOCKED_PATTERN]', lowered)
-    return lowered
+        cleaned = re.sub(p, '[BLOCKED_PATTERN]', cleaned, flags=re.IGNORECASE)
+    return cleaned

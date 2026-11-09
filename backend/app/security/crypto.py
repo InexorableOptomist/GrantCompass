@@ -7,6 +7,8 @@ from app.config import settings
 
 class CryptoService:
     def __init__(self, master_key: str):
+        if len(master_key.encode('utf-8')) < 32 or master_key.startswith('replace-with-'):
+            raise ValueError('GRANTCOMPASS_MASTER_KEY must be a non-placeholder secret of at least 32 bytes')
         # Derive 32-byte key for AES-256 from provided secret
         self._key = hashlib.sha256(master_key.encode('utf-8')).digest()
 
